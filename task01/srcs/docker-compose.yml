@@ -1,0 +1,40 @@
+version: '3.8'
+services:
+
+  jenkins:
+    image: jenkins/jenkins:lts
+    privileged: true
+    user: root
+    ports:
+      - 8080:8080 #tell Docker to redirect ports 8080 and 50000 to the host’s network
+      - 50000:50000
+    container_name: jenkins
+    volumes:
+      - ${HOME}/jenkins_compose/jenkins_configuration:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+
+  nexus:
+    image: sonatype/nexus3:3.5.0
+    volumes:
+      - /nexus-data:/nexus-data
+    ports:
+      - 8081:8081
+      - 20000:20000
+    container_name: nexus
+    # links:
+    #   - jenkins0
+
+  bitbucket:
+    image: atlassian/bitbucket-server:5.2.3
+    ports:
+      - 7999:7999
+      - 7990:7990
+    container_name: bitbucket
+    volumes:
+      - /var/atlassian/application-data/bitbucket:/var/atlassian/application-data/bitbucket
+
+networks:
+  infra:
+    driver: bridge
+
+
