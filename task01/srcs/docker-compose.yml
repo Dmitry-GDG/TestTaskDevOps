@@ -16,11 +16,12 @@ services:
   nexus:
     image: sonatype/nexus3:3.5.0
     volumes:
-      - /nexus-data:/nexus-data
+      - ./nexus:/nexus-data
     ports:
       - 8081:8081
       - 20000:20000
     container_name: nexus
+    restart: always
     # links:
     #   - jenkins0
 
