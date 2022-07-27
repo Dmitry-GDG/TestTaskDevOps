@@ -12,7 +12,7 @@
 
 ```zsh
 	sudo apt-get update -y && sudo apt-get upgrade -y
-	make re
+	make
 	docker ps
 	make ps
 	docker logs -f имя_контейнера
@@ -32,9 +32,8 @@
 	localhost:7990
 ```
 
-- Nexus: curl http://localhost:8081/
+- Nexus:
 ```
 	localhost:8081 
-	curl http://localhost:8081/
 	(for password go via terminal sudo docker exec -it nexus cat /nexus-data/admin.password)
 ```

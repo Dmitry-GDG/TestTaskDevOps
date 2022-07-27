@@ -18,11 +18,8 @@ clean :
 
 fclean : clean
 	docker system prune -f
-	docker stop $(docker ps -qa);
-	docker rm $(docker ps -qa);
-	docker rmi -f $(docker images -qa);
-	docker volume rm $(docker volume ls -q);
-	docker network rm $(docker network ls -q) 2>/dev/null
+	sudo chmod 777 ${HOME}/jenkins_compose
+	sudo rm -rf ${HOME}/jenkins_compose
 
 ps:
 	docker-compose -f ${SRC} ps
