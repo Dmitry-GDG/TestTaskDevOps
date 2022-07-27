@@ -11,6 +11,7 @@
 По возможности использовать docker-compose
 
 ```zsh
+	sudo apt-get update -y && sudo apt-get upgrade -y
 	make
 	docker ps
 	make ps
@@ -20,9 +21,20 @@
 ```
 ### To test:
 
-- Jenkins: localhost:8080 (for password go via terminal docker logs jenkins | less)
+- Jenkins: 
+```
+	localhost:8080 
+	(for password go via terminal docker logs jenkins | less)
+```
 
-- Bitbucket: localhost:7990
+- Bitbucket: 
+```
+	localhost:7990
+```
 
 - Nexus: curl http://localhost:8081/
-
+```
+	localhost:8081 
+	curl http://localhost:8081/
+	(for password go via terminal sudo docker exec -it nexus cat /nexus-data/admin.password)
+```

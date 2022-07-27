@@ -5,8 +5,10 @@ SRC = ./srcs/docker-compose.yml
 all : ${NAME}
 
 ${NAME}:
-	mkdir -p ${HOME}/nexus-data
-	chmod 777 ${HOME}/nexus-data
+#	mkdir -p ${HOME}/sonatype-work/nexus3/log
+#	mkdir -p ${HOME}/sonatype-work/nexus3/tmp
+#	chmod 777 ${HOME}/sonatype-work/nexus3/log
+#	chmod 777 ${HOME}/sonatype-work/nexus3/tmp
 	docker-compose -f ${SRC} build --parallel
 	docker-compose -f ${SRC} up -d
 
@@ -16,7 +18,7 @@ stop :
 	docker-compose -f ${SRC} down
 
 clean :
-	sudo rm -rf ${HOME}/nexus-data/*
+#	sudo rm -rf ${HOME}/sonatype-work/*
 	docker-compose -f ${SRC} down --rmi all
 
 fclean : clean

@@ -14,16 +14,15 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
   nexus:
-    image: sonatype/nexus3:3.5.0
+    image: sonatype/nexus3
     volumes:
-      - ./nexus:/nexus-data
+      - nexus-data:/sonatype-work
     ports:
       - 8081:8081
+      - 8085:8085
       - 20000:20000
     container_name: nexus
     restart: always
-    # links:
-    #   - jenkins0
 
   bitbucket:
     image: atlassian/bitbucket-server:5.2.3
@@ -38,4 +37,5 @@ networks:
   infra:
     driver: bridge
 
-
+volumes:
+  nexus-data: {}
