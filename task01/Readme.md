@@ -12,7 +12,7 @@
 
 ```zsh
 	sudo apt-get update -y && sudo apt-get upgrade -y
-	make
+	make re
 	docker ps
 	make ps
 	docker logs -f имя_контейнера

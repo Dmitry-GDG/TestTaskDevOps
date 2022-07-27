@@ -5,10 +5,6 @@ SRC = ./srcs/docker-compose.yml
 all : ${NAME}
 
 ${NAME}:
-#	mkdir -p ${HOME}/sonatype-work/nexus3/log
-#	mkdir -p ${HOME}/sonatype-work/nexus3/tmp
-#	chmod 777 ${HOME}/sonatype-work/nexus3/log
-#	chmod 777 ${HOME}/sonatype-work/nexus3/tmp
 	docker-compose -f ${SRC} build --parallel
 	docker-compose -f ${SRC} up -d
 
@@ -18,13 +14,17 @@ stop :
 	docker-compose -f ${SRC} down
 
 clean :
-#	sudo rm -rf ${HOME}/sonatype-work/*
 	docker-compose -f ${SRC} down --rmi all
 
 fclean : clean
 	docker system prune -f
+	docker stop $(docker ps -qa);
+	docker rm $(docker ps -qa);
+	docker rmi -f $(docker images -qa);
+	docker volume rm $(docker volume ls -q);
+	docker network rm $(docker network ls -q) 2>/dev/null
 
 ps:
-	docker-compose -f srcs/docker-compose.yml ps
+	docker-compose -f ${SRC} ps
 
 .PHONY: clean fclean all stop ps
