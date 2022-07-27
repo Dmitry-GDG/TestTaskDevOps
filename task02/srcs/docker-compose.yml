@@ -1,0 +1,58 @@
+version: '3.8'
+services:
+
+  nginx:
+    build: requirements/nginx/
+    container_name: nginx
+    volumes:
+      - wp-data:/var/www/html
+    env_file:
+      - .env
+    networks:
+      - node_network
+    ports:
+      - "443:443"
+    restart: unless-stopped
+
+  nexus:
+    image: sonatype/nexus3
+    volumes:
+      - nexus-data:/sonatype-work
+    ports:
+      - 8081:8081
+      - 8085:8085
+      - 20000:20000
+    container_name: nexus
+    restart: always
+
+  node_app:
+    build: requirements/app
+    container_name: node_app
+    volumes:
+      - '/var/run/docker.sock:/var/run/docker.sock:ro'
+    networks:
+      - node_network
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
+    restart: unless-stopped
+
+networks:
+  node_network:
+    driver: bridge
+
+volumes:
+  wp-data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${HOME}/data/wp
+  db-data:
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: ${HOME}/data/db
+  nexus-data: {}
